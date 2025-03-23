@@ -7,6 +7,8 @@ import com.example.Reto.repository.VacanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VacanteServiceImpl implements VacanteService{
 
@@ -14,7 +16,7 @@ public class VacanteServiceImpl implements VacanteService{
     private VacanteRepository vacanteRepository;
     @Autowired
     private SolicitudRepository solicitudRepository;
-
+    // ------------------------------    EMPRESA ----------------------------------
     // Antes de guardar la vacante e insertarla en la base de datos le cambiamos el estatus a la vacante a CREADA para que siempre que se cree tenga ese estatus
     @Override
     public Vacante publicarVacante(Vacante vacante) {
@@ -50,8 +52,17 @@ public class VacanteServiceImpl implements VacanteService{
             System.out.println("El nombre de la vacante o el id de la solicitud es incorrecto");
         }
 
+    }
 
-
+    @Override
+    public List<Solicitud> obtenerSolicitudesDeVacante(int id_vacante) {
+        Vacante vacante = vacanteRepository.findById(id_vacante).orElse(null);
+        if(vacante != null){
+            return vacante.getSolicitudes();
+        }else{
+            System.out.println("No hay vacantes en esta solicitud");
+        }
+        return null;
     }
 
 
