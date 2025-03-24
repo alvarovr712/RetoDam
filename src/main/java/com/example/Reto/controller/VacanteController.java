@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("vacante")
@@ -24,22 +25,51 @@ public class VacanteController {
         return "Vacante agregada correctamente";
     }
 
-    @PutMapping("borrarvacante")
-    public String borrarVacante(@RequestParam String nombre){
-        vacanteService.borrarVacante(nombre);
+    @PutMapping("retirar/{id_vacante}")
+    public String borrarVacante(@PathVariable int id_vacante){
+        vacanteService.borrarVacante(id_vacante);
         return "La vacante ha sido borrada con éxito";
     }
 
-    @PutMapping("asignarvacante")
-    public String asignarVacante(@RequestParam String nombreVacante,@RequestParam int id_solicitud){
-        vacanteService.asignarVacante(nombreVacante,id_solicitud);
+    @PutMapping("asignar/{id_vacante}/{id_solicitud}")
+    public String asignarVacante(@PathVariable int id_vacante,@PathVariable int id_solicitud){
+        vacanteService.asignarVacante(id_vacante,id_solicitud);
         return "La vacante se ha asignado correctamente";
 
     }
     //Obtener todas las solicitudes de una vacante
-    @GetMapping("versolicitudes")
-    public ResponseEntity<List<Solicitud>> obtenerSolicitudes(@RequestParam int id_vacante){
+    @GetMapping("solicitudes/{id_vacante}")
+    public ResponseEntity<List<Solicitud>> obtenerSolicitudes(@PathVariable int id_vacante){
         return (new ResponseEntity<>(vacanteService.obtenerSolicitudesDeVacante(id_vacante),HttpStatus.OK));
+    }
+
+    //Buscar vacante por id
+    @GetMapping("{id_vacante}")
+    public ResponseEntity<Optional<Vacante>> vacantePorId(@PathVariable int id_vacante){
+        return (new ResponseEntity<>(vacanteService.buscarVacantePorId(id_vacante),HttpStatus.OK));
+    }
+    //Buscar todas las vacantes
+    @GetMapping
+    public ResponseEntity<List<Vacante>> buscarTodas(){
+        return (new ResponseEntity<>(vacanteService.buscarTodas(),HttpStatus.OK));
+    }
+
+    //Modificar vacante(Se puede modificar solo el campo que se necesite y los demas quedaran igual que antes de la modificación)
+    @PutMapping("modificar/{id_vacante}")
+    public ResponseEntity<Vacante> modificarVacante(@PathVariable int id_vacante,@RequestBody Vacante vacante){
+        return (new ResponseEntity<>(vacanteService.modificarVacante(id_vacante,vacante),HttpStatus.OK));
+    }
+
+    // ------------- USUARIO ------------------------
+    //Filtro Empresa
+    @GetMapping("empresa/{id_empresa}")
+    public ResponseEntity<List<Vacante>> filtroEmpresa(@PathVariable int id_empresa){
+        return (new ResponseEntity<>(vacanteService.buscarPorEmpresa(id_empresa),HttpStatus.OK));
+    }
+    //Filtro Categoria
+    @GetMapping("categoria/{id_categoria}")
+    public ResponseEntity<List<Vacante>> filtroCategoria(@PathVariable int id_categoria){
+        return (new ResponseEntity<>(vacanteService.buscarPorCategoria(id_categoria),HttpStatus.OK));
     }
 
 }

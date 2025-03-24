@@ -18,7 +18,7 @@ public class EmpresaController {
     private EmpresaService empresaService;
 
 
-    @PostMapping("nuevaempresa")
+    @PostMapping("nuevo")
     public String altaEmpresa(@RequestBody Empresa empresa) {
 
         empresaService.altaEmpresa(empresa);
@@ -38,20 +38,17 @@ public class EmpresaController {
     public  ResponseEntity<List<Empresa>> buscarTodas(){
         return (new ResponseEntity<>(empresaService.buscarTodas(),HttpStatus.OK));
     }
-    //Actualizar Pais
-    @PutMapping("/pais/{id_empresa}")
-    public ResponseEntity<Empresa> actualizarPais(@PathVariable int id_empresa,@RequestParam String nuevoPais){
-        return (new ResponseEntity<>(empresaService.actualizarPais(id_empresa,nuevoPais),HttpStatus.OK));
-    }
-    //Actualizar direccion_social
-    @PutMapping("/direccion/{id_empresa}")
-    public ResponseEntity<Empresa>actualizarDireccion(@PathVariable int id_empresa,@RequestParam String direccion_social){
-        return (new ResponseEntity<>(empresaService.actualizarDireccion(id_empresa,direccion_social),HttpStatus.OK));
+    @PutMapping("/modificar/{id}")
+
+        public ResponseEntity<Empresa> actualizarEmpresa(@PathVariable int id,@RequestBody Empresa empresa){
+            return (new ResponseEntity<>(empresaService.actualizarEmpresa(id,empresa),HttpStatus.OK));
     }
 
-    @PutMapping("/razon/{id_empresa}")
-    public ResponseEntity<Empresa>actualizarRazonSocial(@PathVariable int id_empresa,@RequestParam String razon_social){
-        return (new ResponseEntity<>(empresaService.actualizarRazonSocial(id_empresa,razon_social),HttpStatus.OK));
+
+    @DeleteMapping("retirar/{id}")
+        public ResponseEntity<String>eliminarEmpresa(@PathVariable int id){
+            return(new ResponseEntity<>(empresaService.eliminarEmpresa(id),HttpStatus.OK));
+        }
     }
 
-}
+

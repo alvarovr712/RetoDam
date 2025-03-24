@@ -2,6 +2,7 @@ package com.example.Reto.services;
 
 import com.example.Reto.model.Empresa;
 import com.example.Reto.repository.EmpresaRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,43 +34,37 @@ public class EmpresaServiceImpl implements EmpresaService{
     public List<Empresa> buscarTodas() {
         return empresaRepository.findAll();
     }
-        //Actualizar el pais de la empresa
+        //Actualizar empresa(no hace falta meter todos los valores en el body solo el que se quiera actualizar los otros seguiran siendo los mismos una vez se
+        //actualice)
+
     @Override
-    public Empresa actualizarPais(int id_empresa, String nuevo_pais) {
+    public Empresa actualizarEmpresa(int id_empresa, Empresa nuevaempresa) {
         Empresa empresa = empresaRepository.findById(id_empresa).orElse(null);
 
         if(empresa != null){
 
-            empresa.setPais(nuevo_pais);
-            empresaRepository.save(empresa);
-            return empresa;
+            if(nuevaempresa.getRazon_social() != null){
+            empresa.setRazon_social(nuevaempresa.getRazon_social());}
+            if(nuevaempresa.getDireccion_social() != null){
+            empresa.setDireccion_social(nuevaempresa.getDireccion_social());}
+            if(nuevaempresa.getPais() != null){
+            empresa.setPais(nuevaempresa.getPais());}
+
+            return empresaRepository.save(empresa);
         }else {
             return null;
         }
     }
 
-    // Actualizar direccion_social
+    //Eliminar empresa
     @Override
-    public Empresa actualizarDireccion(int id_empresa, String nueva_direccion) {
+    public String eliminarEmpresa(int id_empresa) {
         Empresa empresa = empresaRepository.findById(id_empresa).orElse(null);
-        if(empresa != null){
-            empresa.setDireccion_social(nueva_direccion);
-            empresaRepository.save(empresa);
-            return empresa;
+        if(empresa != null) {
+            empresaRepository.delete(empresa);
+            return "La empresa ha sido eliminada correctamente";
         }else {
-            return null;
-        }
-    }
-    //Actualizar razon_social
-    @Override
-    public Empresa actualizarRazonSocial(int id_empresa, String nueva_razon_social) {
-        Empresa empresa = empresaRepository.findById(id_empresa).orElse(null);
-        if(empresa != null){
-            empresa.setRazon_social(nueva_razon_social);
-            empresaRepository.save(empresa);
-            return empresa;
-        }else {
-            return null;
+            return "No se encontró la empresa";
         }
     }
 

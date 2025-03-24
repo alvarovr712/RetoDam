@@ -1,5 +1,6 @@
 package com.example.Reto.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -23,10 +24,10 @@ public class Usuario {
     private String email;
 
     @Column
-    private char password;
+    private String password;
 
     @Column
-    private Boolean activado;
+    private boolean activado;
 
     @Column
     private LocalDate fecha_registro;
@@ -41,12 +42,28 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn(name = "id_perfil")
 
     )
+    @JsonIgnore
     private List<Perfil> perfiles;
 
     public Usuario() {
     }
 
-    public Usuario(String username, List<Perfil> perfiles, List<Solicitud> solicitudes, LocalDate fecha_registro, Boolean activado, char password, String email, String apellidos, String nombre) {
+    public Usuario(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public Usuario(String username, LocalDate fecha_registro, boolean activado, String password, String email, String apellidos, String nombre) {
+        this.username = username;
+        this.fecha_registro = fecha_registro;
+        this.activado = activado;
+        this.password = password;
+        this.email = email;
+        this.apellidos = apellidos;
+        this.nombre = nombre;
+    }
+
+    public Usuario(String username, List<Perfil> perfiles, List<Solicitud> solicitudes, LocalDate fecha_registro, boolean activado, String password, String email, String apellidos, String nombre) {
         this.username = username;
         this.perfiles = perfiles;
         this.solicitudes = solicitudes;
@@ -58,10 +75,16 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public Usuario(String email, char password) {
+    public Usuario(String username, String nombre, String apellidos, String email, String password, LocalDate fecha_registro) {
+        this.username = username;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
         this.email = email;
         this.password = password;
+        this.fecha_registro = fecha_registro;
     }
+
+
 
     public String getUsername() {
         return username;
@@ -79,14 +102,6 @@ public class Usuario {
         this.perfiles = perfiles;
     }
 
-    public LocalDate getFecha_registro() {
-        return fecha_registro;
-    }
-
-    public void setFecha_registro(LocalDate fecha_registro) {
-        this.fecha_registro = fecha_registro;
-    }
-
     public List<Solicitud> getSolicitudes() {
         return solicitudes;
     }
@@ -95,19 +110,27 @@ public class Usuario {
         this.solicitudes = solicitudes;
     }
 
-    public Boolean getActivado() {
+    public LocalDate getFecha_registro() {
+        return fecha_registro;
+    }
+
+    public void setFecha_registro(LocalDate fecha_registro) {
+        this.fecha_registro = fecha_registro;
+    }
+
+    public boolean isActivado() {
         return activado;
     }
 
-    public void setActivado(Boolean activado) {
+    public void setActivado(boolean activado) {
         this.activado = activado;
     }
 
-    public char getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(char password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -142,7 +165,7 @@ public class Usuario {
                 ", nombre='" + nombre + '\'' +
                 ", apellidos='" + apellidos + '\'' +
                 ", email='" + email + '\'' +
-                ", password=" + password +
+                ", password='" + password + '\'' +
                 ", activado=" + activado +
                 ", fecha_registro=" + fecha_registro +
                 ", solicitudes=" + solicitudes +

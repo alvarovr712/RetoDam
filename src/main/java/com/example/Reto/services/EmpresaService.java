@@ -12,7 +12,6 @@ public interface EmpresaService {
     public Empresa altaEmpresa(Empresa empresa);
     public Optional<Empresa> buscarEmpresaPorId(int id_empresa);
     public List<Empresa> buscarTodas();
-    public Empresa actualizarPais(int id_empresa,String nuevo_pais);
-    public Empresa actualizarDireccion(int id_empresa,String nueva_direccion);
-    public Empresa actualizarRazonSocial(int id_empresa,String nueva_razon_social);
+    public Empresa actualizarEmpresa(int id_empresa, Empresa empresa);
+    public String eliminarEmpresa(int id_empresa);
 }

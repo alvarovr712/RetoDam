@@ -7,7 +7,9 @@ import com.example.Reto.repository.VacanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VacanteServiceImpl implements VacanteService{
@@ -20,27 +22,28 @@ public class VacanteServiceImpl implements VacanteService{
     // Antes de guardar la vacante e insertarla en la base de datos le cambiamos el estatus a la vacante a CREADA para que siempre que se cree tenga ese estatus
     @Override
     public Vacante publicarVacante(Vacante vacante) {
+        vacante.setFecha(LocalDate.now());
         vacante.setEstatus(Vacante.Estatus.CREADA);
         return vacanteRepository.save(vacante);
     }
-
+    //Borrar Vacante(La ponemos en estado CANCELADA)
     @Override
-    public void borrarVacante(String nombre) {
-        Vacante vacante = vacanteRepository.findByNombre(nombre);
+    public void borrarVacante(int id_vacante) {
+        Vacante vacante = vacanteRepository.findById(id_vacante).orElse(null);
         if(vacante != null){
             vacante.setEstatus(Vacante.Estatus.CANCELADA);
             vacanteRepository.save(vacante);
             System.out.println("La vacante ha sido borrada con éxito");
         }else {
-            System.out.println("No se encontrón ninguna vacante con el nombre: " + nombre);
+            System.out.println("No se encontrón ninguna vacante con el id: " + id_vacante);
         }
 
     }
-
+    //Asignar una solicitud a una vacante y cambiar su estado a ASIGNADO
     @Override
-    public void asignarVacante(String nombreVacante, int id_solicitud) {
+    public void asignarVacante(int id_vacante, int id_solicitud) {
 
-        Vacante vacante = vacanteRepository.findByNombre(nombreVacante);
+        Vacante vacante = vacanteRepository.findById(id_vacante).orElse(null);
         Solicitud solicitud = solicitudRepository.findById(id_solicitud).orElse(null);
         if(vacante != null &&  solicitud != null){
             vacante.setEstatus(Vacante.Estatus.ASIGNADA);
@@ -63,6 +66,55 @@ public class VacanteServiceImpl implements VacanteService{
             System.out.println("No hay vacantes en esta solicitud");
         }
         return null;
+    }
+
+    @Override
+    public Optional<Vacante> buscarVacantePorId(int id_vacante) {
+        return vacanteRepository.findById(id_vacante);
+    }
+
+    @Override
+    public List<Vacante> buscarTodas() {
+        return vacanteRepository.findAll();
+    }
+
+    @Override
+    public Vacante modificarVacante(int id_vacante, Vacante nuevavacante) {
+        Vacante vacante = vacanteRepository.findById(id_vacante).orElse(null);
+
+        if(vacante != null){
+            if(nuevavacante.getNombre() != null){
+                vacante.setNombre(nuevavacante.getNombre());
+            }
+            if(nuevavacante.getDescripcion() != null){
+                vacante.setDescripcion(nuevavacante.getDescripcion());
+            }
+            if(nuevavacante.getSalario() != null){
+                vacante.setSalario(nuevavacante.getSalario());
+            }
+            if(nuevavacante.getDestacado() != null){
+                vacante.setDestacado(nuevavacante.getDestacado());
+            }
+            if(nuevavacante.getImagen() != null){
+                vacante.setImagen(nuevavacante.getImagen());
+            }
+            if(nuevavacante.getDetalles() != null){
+                vacante.setDetalles(nuevavacante.getDetalles());
+            }
+            return vacanteRepository.save(vacante);
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Vacante> buscarPorEmpresa(int id_empresa) {
+          return vacanteRepository.findByEmpresa(id_empresa);
+    }
+
+    @Override
+    public List<Vacante> buscarPorCategoria(int id_categoria) {
+        return vacanteRepository.findByCategoria(id_categoria);
     }
 
 
