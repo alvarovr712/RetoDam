@@ -1,6 +1,7 @@
 package com.example.Reto.services;
 
 import com.example.Reto.model.Usuario;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface UsuarioService {
     public Usuario modificarUsuario(String username,Usuario nuevousuario);
     public Usuario darBajaUsuario(String username);
     public Usuario darAltaUsuario(String username);
+    public String autentificar(Usuario usuario);
+    public Usuario crearUsuarioConPerfil(Usuario usuario);
 
 }

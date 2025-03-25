@@ -5,6 +5,8 @@ import com.example.Reto.model.Usuario;
 import com.example.Reto.repository.PerfilRepository;
 import com.example.Reto.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -102,7 +104,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     //Crear Admin
     @Override
     public Usuario crearAdmin(Usuario usuario) {
-        Perfil perfilAdmin = perfilRepository.findById(3).orElse(null);
+        Perfil perfilAdmin = perfilRepository.findById(1).orElse(null);
 
         usuario.setActivado(true);
         usuario.setFecha_registro(LocalDate.now());
@@ -159,6 +161,37 @@ public class UsuarioServiceImpl implements UsuarioService {
         }else {
             return null;
         }
+    }
+
+
+    @Override
+    public String autentificar(Usuario usuario) {
+         Usuario usuario1 = usuarioRepository.findByUsername(usuario.getUsername());
+
+         if(usuario1 != null && usuario1.getPassword().equals(usuario.getPassword()) && usuario1.isActivado() == true){
+
+             for(Perfil item:usuario1.getPerfiles()){
+                 if(item.getId_perfil() == 3){
+                     return "OK";
+                 }
+             }
+             return "OK1";
+
+         }else {
+             return "Usuario o contraseña incorrectos";
+         }
+    }
+
+    @Override
+    public Usuario crearUsuarioConPerfil(Usuario usuario) {
+        Perfil perfilAdmin = perfilRepository.findById(3).orElse(null);
+
+        usuario.setActivado(true);
+        usuario.setFecha_registro(LocalDate.now());
+
+        perfiles.add(perfilAdmin);
+        usuario.setPerfiles(perfiles);
+        return usuarioRepository.save(usuario);
     }
 
 

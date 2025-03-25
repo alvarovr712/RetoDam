@@ -68,6 +68,19 @@ public class UsuarioController {
     }
 
 
+    //Login
+    @PostMapping("login")
+    public ResponseEntity<String> login(@RequestBody Usuario usuario){
+        return (new ResponseEntity<>(usuarioService.autentificar(usuario),HttpStatus.OK));
+    }
+
+    //Crear usuario con el perfil de usuario
+    @PostMapping("registro")
+    public ResponseEntity<Usuario> CrearUsuarioConPerfil(@RequestBody Usuario usuario){
+        return (new ResponseEntity<>(usuarioService.crearUsuarioConPerfil(usuario),HttpStatus.OK));
+    }
+
+
 
 
 
