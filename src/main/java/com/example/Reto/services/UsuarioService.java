@@ -17,7 +17,7 @@ public interface UsuarioService {
     public Usuario modificarUsuario(String username,Usuario nuevousuario);
     public Usuario darBajaUsuario(String username);
     public Usuario darAltaUsuario(String username);
-    public String autentificar(Usuario usuario);
+    public ResponseEntity<?> autentificar(Usuario usuario);
     public Usuario crearUsuarioConPerfil(Usuario usuario);
 
 }

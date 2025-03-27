@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -165,20 +167,23 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 
     @Override
-    public String autentificar(Usuario usuario) {
+    public ResponseEntity<?> autentificar(Usuario usuario) {
          Usuario usuario1 = usuarioRepository.findByUsername(usuario.getUsername());
 
          if(usuario1 != null && usuario1.getPassword().equals(usuario.getPassword()) && usuario1.isActivado() == true){
 
              for(Perfil item:usuario1.getPerfiles()){
                  if(item.getId_perfil() == 3){
-                     return "OK";
+                     return ResponseEntity.status(HttpStatus.OK)
+                             .body(Collections.singletonMap("mensaje","OK"));
                  }
              }
-             return "OK1";
+             return ResponseEntity.status(HttpStatus.OK)
+                     .body(Collections.singletonMap("mensaje","OK1"));
 
          }else {
-             return "Usuario o contraseña incorrectos";
+             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                     .body(Collections.singletonMap("mensaje","Usuario o contraseña incorrectos"));
          }
     }
 

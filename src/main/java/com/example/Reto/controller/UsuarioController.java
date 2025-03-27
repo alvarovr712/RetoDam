@@ -70,7 +70,7 @@ public class UsuarioController {
 
     //Login
     @PostMapping("login")
-    public ResponseEntity<String> login(@RequestBody Usuario usuario){
+    public ResponseEntity<?> login(@RequestBody Usuario usuario){
         return (new ResponseEntity<>(usuarioService.autentificar(usuario),HttpStatus.OK));
     }
 
