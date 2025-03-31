@@ -15,5 +15,7 @@ public interface VacanteRepository extends JpaRepository<Vacante,Integer> {
     List<Vacante> findByEmpresa(int id_empresa);
     @Query("SELECT v FROM vacante v WHERE v.estatus = 'CREADA' AND v.categoria.id_categoria = :id_categoria")
     List<Vacante> findByCategoria(Integer id_categoria);
+    @Query("SELECT v FROM vacante v WHERE v.empresa.id = :id_empresa")
+    List<Vacante> findByIdEmpresa(int id_empresa);
 
 }

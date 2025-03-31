@@ -49,7 +49,7 @@ public class Vacante {
         ASIGNADA
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_empresa")
     @JsonIgnore
     private Empresa empresa;
@@ -91,8 +91,23 @@ public class Vacante {
         this.detalles = detalles;
     }
 
+    public Vacante(String nombre, String descripcion, Double salario, Boolean destacado, String imagen, String detalles) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.salario = salario;
+        this.destacado = destacado;
+        this.imagen = imagen;
+        this.detalles = detalles;
+    }
 
-
+    public Vacante(String nombre, String descripcion, Double salario, String detalles, String imagen, Empresa empresa) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.salario = salario;
+        this.detalles = detalles;
+        this.imagen = imagen;
+        this.empresa = empresa;
+    }
 
     public Vacante(String nombre) {
         this.nombre = nombre;

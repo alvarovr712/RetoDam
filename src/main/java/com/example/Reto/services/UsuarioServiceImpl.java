@@ -2,6 +2,7 @@ package com.example.Reto.services;
 
 import com.example.Reto.model.Perfil;
 import com.example.Reto.model.Usuario;
+import com.example.Reto.repository.EmpresaRepository;
 import com.example.Reto.repository.PerfilRepository;
 import com.example.Reto.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
@@ -22,6 +20,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     private UsuarioRepository usuarioRepository;
     @Autowired
     private PerfilRepository perfilRepository;
+    @Autowired
+    private EmpresaRepository empresaRepository;
 
     List<Perfil> perfiles = new ArrayList<>();
 
@@ -170,21 +170,33 @@ public class UsuarioServiceImpl implements UsuarioService {
     public ResponseEntity<?> autentificar(Usuario usuario) {
          Usuario usuario1 = usuarioRepository.findByUsername(usuario.getUsername());
 
+
          if(usuario1 != null && usuario1.getPassword().equals(usuario.getPassword()) && usuario1.isActivado() == true){
+
+            int id_empresa = usuarioRepository.findIdEmpresaByUsername(usuario1.getUsername());
 
              for(Perfil item:usuario1.getPerfiles()){
                  if(item.getId_perfil() == 3){
                      return ResponseEntity.status(HttpStatus.OK)
                              .body(Collections.singletonMap("mensaje","OK"));
+                 }else if(item.getId_perfil() == 2){
+
+                     Map<String, Object> response = new HashMap<>();
+                     response.put("mensaje", "OK1");
+                     response.put("id_empresa", id_empresa);
+
+                     return ResponseEntity.status(HttpStatus.OK).body(response);
+                 }else if(item.getId_perfil() == 1){
+                     return ResponseEntity.status(HttpStatus.OK)
+                             .body(Collections.singletonMap("mensaje","OK2"));
                  }
              }
-             return ResponseEntity.status(HttpStatus.OK)
-                     .body(Collections.singletonMap("mensaje","OK1"));
 
-         }else {
+
+         }
              return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                      .body(Collections.singletonMap("mensaje","Usuario o contraseña incorrectos"));
-         }
+
     }
 
     @Override

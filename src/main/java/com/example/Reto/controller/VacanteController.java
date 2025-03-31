@@ -18,11 +18,9 @@ public class VacanteController {
     @Autowired
     private VacanteService vacanteService;
 
-    @PostMapping ("nuevavacante")
-    public String nuevaVacante(@RequestBody Vacante vacante){
-
-        vacanteService.publicarVacante(vacante);
-        return "Vacante agregada correctamente";
+    @PostMapping ("nuevavacante/{id_empresa}")
+    public ResponseEntity<Vacante> nuevaVacante(@RequestBody Vacante vacante, @PathVariable int id_empresa){
+        return (new ResponseEntity<>(vacanteService.publicarVacante(vacante,id_empresa),HttpStatus.OK));
     }
 
     @PutMapping("retirar/{id_vacante}")
@@ -49,9 +47,9 @@ public class VacanteController {
         return (new ResponseEntity<>(vacanteService.buscarVacantePorId(id_vacante),HttpStatus.OK));
     }
     //Buscar todas las vacantes
-    @GetMapping
-    public ResponseEntity<List<Vacante>> buscarTodas(){
-        return (new ResponseEntity<>(vacanteService.buscarTodas(),HttpStatus.OK));
+    @GetMapping("vacantes/{id_empresa}")
+    public ResponseEntity<List<Vacante>> buscarTodas(@PathVariable int id_empresa){
+        return (new ResponseEntity<>(vacanteService.buscarTodas(id_empresa),HttpStatus.OK));
     }
 
     //Modificar vacante(Se puede modificar solo el campo que se necesite y los demas quedaran igual que antes de la modificación)
@@ -59,6 +57,8 @@ public class VacanteController {
     public ResponseEntity<Vacante> modificarVacante(@PathVariable int id_vacante,@RequestBody Vacante vacante){
         return (new ResponseEntity<>(vacanteService.modificarVacante(id_vacante,vacante),HttpStatus.OK));
     }
+
+
 
     // ------------- USUARIO ------------------------
     //Filtro Empresa
@@ -71,5 +71,7 @@ public class VacanteController {
     public ResponseEntity<List<Vacante>> filtroCategoria(@PathVariable int id_categoria){
         return (new ResponseEntity<>(vacanteService.buscarPorCategoria(id_categoria),HttpStatus.OK));
     }
+
+
 
 }

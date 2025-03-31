@@ -1,7 +1,9 @@
 package com.example.Reto.services;
 
+import com.example.Reto.model.Empresa;
 import com.example.Reto.model.Solicitud;
 import com.example.Reto.model.Vacante;
+import com.example.Reto.repository.EmpresaRepository;
 import com.example.Reto.repository.SolicitudRepository;
 import com.example.Reto.repository.VacanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +20,25 @@ public class VacanteServiceImpl implements VacanteService{
     private VacanteRepository vacanteRepository;
     @Autowired
     private SolicitudRepository solicitudRepository;
+    @Autowired
+    private EmpresaRepository empresaRepository;
+
     // ------------------------------    EMPRESA ----------------------------------
     // Antes de guardar la vacante e insertarla en la base de datos le cambiamos el estatus a la vacante a CREADA para que siempre que se cree tenga ese estatus
     @Override
-    public Vacante publicarVacante(Vacante vacante) {
+    public Vacante publicarVacante(Vacante vacante, int id_empresa) {
         vacante.setFecha(LocalDate.now());
         vacante.setEstatus(Vacante.Estatus.CREADA);
+
+        Empresa empresa = empresaRepository.findById(id_empresa).orElse(null);
+
+        vacante.setEmpresa(empresa);
         return vacanteRepository.save(vacante);
+
+
+
+
+
     }
     //Borrar Vacante(La ponemos en estado CANCELADA)
     @Override
@@ -74,8 +88,8 @@ public class VacanteServiceImpl implements VacanteService{
     }
 
     @Override
-    public List<Vacante> buscarTodas() {
-        return vacanteRepository.findAll();
+    public List<Vacante> buscarTodas(int id_empresa) {
+        return vacanteRepository.findByIdEmpresa(id_empresa);
     }
 
     @Override
@@ -107,6 +121,7 @@ public class VacanteServiceImpl implements VacanteService{
         }
     }
 
+
     @Override
     public List<Vacante> buscarPorEmpresa(int id_empresa) {
           return vacanteRepository.findByEmpresa(id_empresa);
@@ -115,6 +130,7 @@ public class VacanteServiceImpl implements VacanteService{
     @Override
     public List<Vacante> buscarPorCategoria(int id_categoria) {
         return vacanteRepository.findByCategoria(id_categoria);
+
     }
 
 

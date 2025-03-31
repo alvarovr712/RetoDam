@@ -44,6 +44,12 @@ public class Usuario {
     )
     @JsonIgnore
     private List<Perfil> perfiles;
+    @OneToOne(mappedBy = "responsable",fetch = FetchType.LAZY)
+    private Empresa empresa;
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
 
     public Usuario() {
     }

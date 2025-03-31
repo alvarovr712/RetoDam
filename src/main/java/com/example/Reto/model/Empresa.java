@@ -21,24 +21,51 @@ public class Empresa {
     @Column
     private String pais;
 
-    @OneToMany(mappedBy = "empresa",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+
+
+    @OneToMany(mappedBy = "empresa",fetch = FetchType.LAZY)
     private List<Vacante> vacantes;
+
+    @OneToOne
+    @JoinColumn(name = "responsable",referencedColumnName = "username")
+    private Usuario responsable;
+
 
     public Empresa() {
     }
 
-    public Empresa(int id_empresa, List<Vacante> vacantes, String pais, String direccion_social, String razon_social) {
+    public Empresa(int id_empresa) {
         this.id_empresa = id_empresa;
-        this.vacantes = vacantes;
-        this.pais = pais;
-        this.direccion_social = direccion_social;
+    }
+
+    public Empresa(int id_empresa, String razon_social, String direccion_social, String pais, List<Vacante> vacantes, Usuario responsable) {
+        this.id_empresa = id_empresa;
         this.razon_social = razon_social;
+        this.direccion_social = direccion_social;
+        this.pais = pais;
+        this.vacantes = vacantes;
+        this.responsable = responsable;
     }
 
     public Empresa(String razon_social, String direccion_social, String pais) {
         this.razon_social = razon_social;
         this.direccion_social = direccion_social;
         this.pais = pais;
+    }
+
+    public Empresa(String razon_social, String direccion_social, String pais, Usuario responsable) {
+        this.razon_social = razon_social;
+        this.direccion_social = direccion_social;
+        this.pais = pais;
+        this.responsable = responsable;
+    }
+
+    public Usuario getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(Usuario responsable) {
+        this.responsable = responsable;
     }
 
     public int getId_empresa() {
@@ -89,6 +116,7 @@ public class Empresa {
                 ", direccion_social='" + direccion_social + '\'' +
                 ", pais='" + pais + '\'' +
                 ", vacantes=" + vacantes +
+                ", responsable=" + responsable +
                 '}';
     }
 }
