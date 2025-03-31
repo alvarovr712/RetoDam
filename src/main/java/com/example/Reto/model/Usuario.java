@@ -90,7 +90,13 @@ public class Usuario {
         this.fecha_registro = fecha_registro;
     }
 
-
+    public Usuario(String username, String nombre, String apellidos, String email, String password) {
+        this.username = username;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.email = email;
+        this.password = password;
+    }
 
     public String getUsername() {
         return username;

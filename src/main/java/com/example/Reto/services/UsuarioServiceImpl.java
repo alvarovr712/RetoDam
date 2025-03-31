@@ -80,7 +80,6 @@ public class UsuarioServiceImpl implements UsuarioService {
             return null;
         }
 
-
     }
 
     @Override
@@ -173,13 +172,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 
          if(usuario1 != null && usuario1.getPassword().equals(usuario.getPassword()) && usuario1.isActivado() == true){
 
-            int id_empresa = usuarioRepository.findIdEmpresaByUsername(usuario1.getUsername());
+
 
              for(Perfil item:usuario1.getPerfiles()){
                  if(item.getId_perfil() == 3){
                      return ResponseEntity.status(HttpStatus.OK)
                              .body(Collections.singletonMap("mensaje","OK"));
                  }else if(item.getId_perfil() == 2){
+                     int id_empresa = usuarioRepository.findIdEmpresaByUsername(usuario1.getUsername());
 
                      Map<String, Object> response = new HashMap<>();
                      response.put("mensaje", "OK1");
