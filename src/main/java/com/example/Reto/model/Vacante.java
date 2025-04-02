@@ -2,7 +2,6 @@ package com.example.Reto.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.apache.logging.log4j.util.Lazy;
 
 import java.time.LocalDate;
 import java.util.List;

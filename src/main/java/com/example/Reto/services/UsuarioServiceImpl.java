@@ -187,8 +187,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 
                      return ResponseEntity.status(HttpStatus.OK).body(response);
                  }else if(item.getId_perfil() == 1){
-                     return ResponseEntity.status(HttpStatus.OK)
-                             .body(Collections.singletonMap("mensaje","OK2"));
+                     int id_empresa = 0;
+
+                     Map<String, Object> response = new HashMap<>();
+                     response.put("mensaje", "OK2");
+                     response.put("id_empresa", id_empresa);
+
+                     return ResponseEntity.status(HttpStatus.OK).body(response);
                  }
              }
 

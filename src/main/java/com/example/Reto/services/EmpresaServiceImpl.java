@@ -2,7 +2,6 @@ package com.example.Reto.services;
 
 import com.example.Reto.model.Empresa;
 import com.example.Reto.repository.EmpresaRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
