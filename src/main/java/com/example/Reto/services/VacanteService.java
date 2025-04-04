@@ -19,4 +19,6 @@ public interface VacanteService {
     public List<Vacante> buscarPorEmpresa(int id_empresa);
     public List<Vacante> buscarPorCategoria(int id_categoria);
 
+
+
 }
