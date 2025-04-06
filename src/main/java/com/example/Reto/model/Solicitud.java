@@ -26,14 +26,12 @@ public class Solicitud {
     @Column
     private int estado;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "id_vacante")
-    @JsonIgnore
     private Vacante vacante;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "username")
-    @JsonIgnore
     private Usuario usuario;
 
     public Solicitud() {
@@ -54,6 +52,13 @@ public class Solicitud {
         this.archivo = archivo;
         this.comentario = comentario;
         this.estado = estado;
+    }
+
+    public Solicitud(String archivo, String comentario, Vacante vacante, Usuario usuario) {
+        this.archivo = archivo;
+        this.comentario = comentario;
+        this.vacante = vacante;
+        this.usuario = usuario;
     }
 
     public int getId_solicitud() {

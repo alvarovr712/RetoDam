@@ -33,6 +33,7 @@ public class Usuario {
     private LocalDate fecha_registro;
 
     @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Solicitud> solicitudes;
 
     @ManyToMany
@@ -52,6 +53,10 @@ public class Usuario {
     }
 
     public Usuario() {
+    }
+
+    public Usuario(String username) {
+        this.username = username;
     }
 
     public Usuario(String username, String password) {

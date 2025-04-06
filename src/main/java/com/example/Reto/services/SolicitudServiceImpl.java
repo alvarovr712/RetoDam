@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class SolicitudServiceImpl implements SolicitudService{
@@ -19,20 +20,19 @@ public class SolicitudServiceImpl implements SolicitudService{
     private VacanteRepository vacanteRepository;
 
     @Override
-    public Solicitud crearSolicitud(Solicitud solicitud, String nombre) {
+    public Solicitud crearSolicitud(Solicitud solicitud) {
+        Vacante vacante = vacanteRepository.findById(solicitud.getVacante().getId_vacante()).orElse(null);
 
-        Vacante vacante = vacanteRepository.findIdByNombre(nombre);
-
-        if(vacante != null){
-            solicitud.setVacante(vacante);
-            solicitud.setFecha(LocalDate.now());
-            solicitud.setEstado(0);
-            return solicitudRepository.save(solicitud);
-        }else {
+        if(vacante != null) {
             return null;
         }
 
+        solicitud.setVacante(vacante);
+        solicitud.setFecha(LocalDate.now());
+        solicitud.setEstado(0);
 
+        return solicitudRepository.save(solicitud);
 
+//        return solicitud;
     }
 }

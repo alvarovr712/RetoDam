@@ -60,9 +60,14 @@ public class Vacante {
 
     //He tenido que poner el fetch en Lazy porque al intentar cambiar el estatus de la vacante me daba error con el EAGER
     @OneToMany(mappedBy = "vacante",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Solicitud> solicitudes;
 
     public Vacante() {
+    }
+
+    public Vacante(int id_vacante) {
+        this.id_vacante = id_vacante;
     }
 
     public Vacante(int id_vacante, List<Solicitud> solicitudes, Categoria categoria, Empresa empresa, Estatus estatus, String imagen, String detalles, Boolean destacado, Double salario, LocalDate fecha, String descripcion, String nombre) {

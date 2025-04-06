@@ -16,8 +16,8 @@ public class SolicitudController {
     @Autowired
     private SolicitudService solicitudService;
 
-    @PostMapping("{nombre}")
-    public ResponseEntity<Solicitud> crearSolicitud(@PathVariable String nombre, @RequestBody Solicitud solicitud){
-        return (new ResponseEntity<>(solicitudService.crearSolicitud(solicitud,nombre), HttpStatus.OK));
+    @PostMapping("nueva")
+    public ResponseEntity<Solicitud> crearSolicitud(@RequestBody Solicitud solicitud){
+        return (new ResponseEntity<>(solicitudService.crearSolicitud(solicitud), HttpStatus.OK));
     }
 }
