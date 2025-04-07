@@ -18,6 +18,13 @@ public class SolicitudController {
 
     @PostMapping("nueva")
     public ResponseEntity<Solicitud> crearSolicitud(@RequestBody Solicitud solicitud){
-        return (new ResponseEntity<>(solicitudService.crearSolicitud(solicitud), HttpStatus.OK));
+        Solicitud solicitud1 = solicitudService.crearSolicitud(solicitud);
+
+        if(solicitud1 == null){
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(null);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(solicitud1);
     }
 }

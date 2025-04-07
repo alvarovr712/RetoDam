@@ -23,7 +23,16 @@ public class SolicitudServiceImpl implements SolicitudService{
     public Solicitud crearSolicitud(Solicitud solicitud) {
         Vacante vacante = vacanteRepository.findById(solicitud.getVacante().getId_vacante()).orElse(null);
 
-        if(vacante != null) {
+        if(vacante == null) {
+            return null;
+        }
+
+        Solicitud solicitud1 = solicitudRepository.buscarUsernameIdVacante(
+                solicitud.getUsuario().getUsername(),
+                solicitud.getVacante().getId_vacante()
+        );
+
+        if(solicitud1  != null){
             return null;
         }
 

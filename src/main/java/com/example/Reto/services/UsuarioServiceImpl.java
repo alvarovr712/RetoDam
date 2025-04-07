@@ -37,8 +37,14 @@ public class UsuarioServiceImpl implements UsuarioService {
             usuario.setActivado(true);
             usuario.setFecha_registro(LocalDate.now());
 
-            perfiles.add(perfilUsuario);
-            usuario.setPerfiles(perfiles);
+            List<Perfil> perfiles1 = usuario.getPerfiles() != null ? usuario.getPerfiles() : new ArrayList<>();
+
+            if(!perfiles1.contains(perfilUsuario)){
+
+            perfiles1.add(perfilUsuario);
+            }
+
+            usuario.setPerfiles(perfiles1);
             return usuarioRepository.save(usuario);
         }else {
             return null;
