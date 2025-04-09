@@ -8,6 +8,7 @@ import com.example.Reto.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,6 +24,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private EmpresaRepository empresaRepository;
 
+    private  final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     List<Perfil> perfiles = new ArrayList<>();
 
     //-------------- ADMINISTRADOR y USUARIO-----------------------
@@ -36,6 +39,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         if(perfilUsuario != null && id_perfil != 1){
             usuario.setActivado(true);
             usuario.setFecha_registro(LocalDate.now());
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 
             List<Perfil> perfiles1 = usuario.getPerfiles() != null ? usuario.getPerfiles() : new ArrayList<>();
 
@@ -88,6 +92,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     }
 
+    /** En este método nos devuelve todo menos la contraseña, buscamos a todos, creamos un nuevo arraylist donde vamos a meter todos los usuarios encontrados
+     * una vez encontrados vamos a crear otro arraylist donde vamos a copiar los usuarios del primer arraylist pero sin la contraseña, iteramos con un bucle for
+     * insertamos todos excepto la contraseña se los agregamos al Array y lo devolvemos.
+     * **/
+
     @Override
     public List<Usuario> buscarTodos() {
         List<Usuario> usuarios = usuarioRepository.findAll();
@@ -115,6 +124,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         usuario.setActivado(true);
         usuario.setFecha_registro(LocalDate.now());
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 
         perfiles.add(perfilAdmin);
         usuario.setPerfiles(perfiles);
@@ -137,7 +147,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 usuario.setEmail(nuevousuario.getEmail());
             }
             if(nuevousuario.getPassword() != null){
-                usuario.setPassword(nuevousuario.getPassword());
+                usuario.setPassword(passwordEncoder.encode(nuevousuario.getPassword()));
             }
 
             return usuarioRepository.save(usuario);
@@ -175,7 +185,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public ResponseEntity<?> autentificar(Usuario usuario) {
          Usuario usuario1 = usuarioRepository.findByUsername(usuario.getUsername());
 
-         if(usuario1 != null && usuario1.getPassword().equals(usuario.getPassword()) && usuario1.isActivado() == true){
+         if(usuario1 != null && passwordEncoder.matches(usuario.getPassword(),usuario1.getPassword()) && usuario1.isActivado() == true){
 
              for(Perfil item:usuario1.getPerfiles()){
 
@@ -210,12 +220,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario crearUsuarioConPerfil(Usuario usuario) {
-        Perfil perfilAdmin = perfilRepository.findById(3).orElse(null);
+        Perfil perfilUsuario = perfilRepository.findById(3).orElse(null);
 
         usuario.setActivado(true);
         usuario.setFecha_registro(LocalDate.now());
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 
-        perfiles.add(perfilAdmin);
+        perfiles.add(perfilUsuario);
         usuario.setPerfiles(perfiles);
         return usuarioRepository.save(usuario);
     }
