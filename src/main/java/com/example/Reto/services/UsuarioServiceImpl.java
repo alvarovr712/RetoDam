@@ -124,7 +124,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         usuario.setActivado(true);
         usuario.setFecha_registro(LocalDate.now());
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()
+        ));
 
         perfiles.add(perfilAdmin);
         usuario.setPerfiles(perfiles);

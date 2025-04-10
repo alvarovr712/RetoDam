@@ -18,7 +18,7 @@ public interface VacanteService {
     // --------------- USUARIO ---------------------
     public List<Vacante> buscarPorEmpresa(int id_empresa);
     public List<Vacante> buscarPorCategoria(int id_categoria);
-
+    public List<Vacante> verVacantesCreadas();
 
 
 }

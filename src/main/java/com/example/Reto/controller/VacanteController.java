@@ -72,6 +72,13 @@ public class VacanteController {
         return (new ResponseEntity<>(vacanteService.buscarPorCategoria(id_categoria),HttpStatus.OK));
     }
 
+    //Ver vacantes por estado creado
+
+    @GetMapping
+    public ResponseEntity<List<Vacante>> verVacantesCreadas(){
+        return (new ResponseEntity<>(vacanteService.verVacantesCreadas(),HttpStatus.OK));
+    }
+
 
 
 

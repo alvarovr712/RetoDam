@@ -133,6 +133,10 @@ public class VacanteServiceImpl implements VacanteService{
 
     }
 
+    @Override
+    public List<Vacante> verVacantesCreadas() {
+       return vacanteRepository.findVacantesByEstatus();
+    }
 
 
 }
