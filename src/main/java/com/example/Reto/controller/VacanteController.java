@@ -76,7 +76,7 @@ public class VacanteController {
     //Ver vacantes por estado creado
 
     @GetMapping
-    public ResponseEntity<List<Vacante>> verVacantesCreadas(){
+    public ResponseEntity<List<VacanteDTO>> verVacantesCreadas(){
         return (new ResponseEntity<>(vacanteService.verVacantesCreadas(),HttpStatus.OK));
     }
 
