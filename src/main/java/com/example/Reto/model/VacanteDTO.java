@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class VacanteDTO {
 
+    private int id_vacante;
     private String nombre;
     private String descripcion;
     private LocalDate fecha;
@@ -14,8 +15,8 @@ public class VacanteDTO {
     private String razonSocial;
     private String categoria;
 
-    public VacanteDTO(String nombre, String descripcion, LocalDate fecha, Double salario, Boolean destacado,
-                      String imagen, String detalles, String razonSocial, String categoria) {
+    public VacanteDTO(int id_vacante, String nombre, String descripcion, LocalDate fecha, Double salario, Boolean destacado, String imagen, String detalles, String razonSocial, String categoria) {
+        this.id_vacante = id_vacante;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fecha = fecha;
@@ -25,6 +26,14 @@ public class VacanteDTO {
         this.detalles = detalles;
         this.razonSocial = razonSocial;
         this.categoria = categoria;
+    }
+
+    public int getId_vacante() {
+        return id_vacante;
+    }
+
+    public void setId_vacante(int id_vacante) {
+        this.id_vacante = id_vacante;
     }
 
     public String getNombre() {

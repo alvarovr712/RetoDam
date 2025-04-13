@@ -134,7 +134,7 @@ public class VacanteServiceImpl implements VacanteService{
              String categoriaNombre = (item.getCategoria() != null) ? item.getCategoria().getNombre() : "null";
              String empresaNombre = (item.getEmpresa() != null) ? item.getEmpresa().getRazon_social(): "null";
              VacanteDTO vacante = new VacanteDTO(
-
+                     item.getId_vacante(),
                      item.getNombre(),
                      item.getDescripcion(),
                      item.getFecha(),
@@ -161,6 +161,7 @@ public class VacanteServiceImpl implements VacanteService{
             String categoriaNombre = (item.getCategoria() != null) ? item.getCategoria().getNombre() : "null";
             String empresaNombre = (item.getEmpresa() != null) ? item.getEmpresa().getRazon_social(): "null";
             VacanteDTO vacante = new VacanteDTO(
+                item.getId_vacante(),
                 item.getNombre(),
                 item.getDescripcion(),
                 item.getFecha(),
