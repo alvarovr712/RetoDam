@@ -2,6 +2,7 @@ package com.example.Reto.controller;
 
 import com.example.Reto.model.Solicitud;
 import com.example.Reto.model.Vacante;
+import com.example.Reto.model.VacanteDTO;
 import com.example.Reto.services.VacanteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,12 +64,12 @@ public class VacanteController {
     // ------------- USUARIO ------------------------
     //Filtro Empresa
     @GetMapping("empresa/{nombreEmpresa}")
-    public ResponseEntity<List<Vacante>> filtroEmpresa(@PathVariable  String nombreEmpresa){
+    public ResponseEntity<List<VacanteDTO>> filtroEmpresa(@PathVariable  String nombreEmpresa){
         return (new ResponseEntity<>(vacanteService.buscarPorEmpresa(nombreEmpresa),HttpStatus.OK));
     }
     //Filtro Categoria
     @GetMapping("categoria/{nombreCategoria}")
-    public ResponseEntity<List<Vacante>> filtroCategoria(@PathVariable String nombreCategoria){
+    public ResponseEntity<List<VacanteDTO>> filtroCategoria(@PathVariable String nombreCategoria){
         return (new ResponseEntity<>(vacanteService.buscarPorCategoria(nombreCategoria),HttpStatus.OK));
     }
 

@@ -3,6 +3,7 @@ package com.example.Reto.services;
 import com.example.Reto.model.Empresa;
 import com.example.Reto.model.Solicitud;
 import com.example.Reto.model.Vacante;
+import com.example.Reto.model.VacanteDTO;
 import com.example.Reto.repository.EmpresaRepository;
 import com.example.Reto.repository.SolicitudRepository;
 import com.example.Reto.repository.VacanteRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -123,13 +125,55 @@ public class VacanteServiceImpl implements VacanteService{
 
 
     @Override
-    public List<Vacante> buscarPorEmpresa(String nombre) {
-          return vacanteRepository.findByRazonSocial(nombre);
+    public List<VacanteDTO> buscarPorEmpresa(String nombre) {
+         List<Vacante> vacantes = vacanteRepository.findByRazonSocial(nombre);
+         List<VacanteDTO> vacantes2 = new ArrayList<>();
+
+         for(Vacante item : vacantes){
+
+             String categoriaNombre = (item.getCategoria() != null) ? item.getCategoria().getNombre() : "null";
+             String empresaNombre = (item.getEmpresa() != null) ? item.getEmpresa().getRazon_social(): "null";
+             VacanteDTO vacante = new VacanteDTO(
+
+                     item.getNombre(),
+                     item.getDescripcion(),
+                     item.getFecha(),
+                     item.getSalario(),
+                     item.getDestacado(),
+                     item.getImagen(),
+                     item.getDetalles(),
+                     empresaNombre,
+                     categoriaNombre
+             );
+
+             vacantes2.add(vacante);
+         }
+         return vacantes2;
     }
 
     @Override
-    public List<Vacante> buscarPorCategoria(String nombre) {
-        return vacanteRepository.findByCategoria(nombre);
+    public List<VacanteDTO> buscarPorCategoria(String nombre) {
+        List<Vacante> vacantes = new ArrayList<>();
+        vacantes = vacanteRepository.findByCategoria(nombre);
+        List<VacanteDTO> vacantes2 = new ArrayList<>();
+        for(Vacante item : vacantes){
+
+            String categoriaNombre = (item.getCategoria() != null) ? item.getCategoria().getNombre() : "null";
+            String empresaNombre = (item.getEmpresa() != null) ? item.getEmpresa().getRazon_social(): "null";
+            VacanteDTO vacante = new VacanteDTO(
+                item.getNombre(),
+                item.getDescripcion(),
+                item.getFecha(),
+                item.getSalario(),
+                item.getDestacado(),
+                item.getImagen(),
+                item.getDetalles(),
+                empresaNombre,
+                categoriaNombre
+                );
+            vacantes2.add(vacante);
+        }
+        return vacantes2;
 
     }
 

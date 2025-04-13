@@ -42,6 +42,8 @@ public class Vacante {
     @Enumerated(EnumType.STRING)
     private Estatus estatus = Estatus.CREADA;
 
+
+
     public enum Estatus{
         CREADA,
         CANCELADA,
@@ -63,12 +65,27 @@ public class Vacante {
     @JsonIgnore
     private List<Solicitud> solicitudes;
 
+
     public Vacante() {
     }
 
     public Vacante(int id_vacante) {
         this.id_vacante = id_vacante;
     }
+
+    public Vacante(String nombre, String descripcion, LocalDate fecha, Double salario, Boolean destacado, String imagen, String detalles, Empresa empresa, Categoria categoria) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+        this.salario = salario;
+        this.destacado = destacado;
+        this.imagen = imagen;
+        this.detalles = detalles;
+        this.empresa = empresa;
+        this.categoria = categoria;
+    }
+
+
 
     public Vacante(int id_vacante, List<Solicitud> solicitudes, Categoria categoria, Empresa empresa, Estatus estatus, String imagen, String detalles, Boolean destacado, Double salario, LocalDate fecha, String descripcion, String nombre) {
         this.id_vacante = id_vacante;
@@ -111,6 +128,20 @@ public class Vacante {
         this.detalles = detalles;
         this.imagen = imagen;
         this.empresa = empresa;
+    }
+
+    public Vacante(int id_vacante, Categoria categoria, Empresa empresa, Estatus estatus, String detalles, String imagen, Boolean destacado, Double salario, LocalDate fecha, String descripcion, String nombre) {
+        this.id_vacante = id_vacante;
+        this.categoria = categoria;
+        this.empresa = empresa;
+        this.estatus = estatus;
+        this.detalles = detalles;
+        this.imagen = imagen;
+        this.destacado = destacado;
+        this.salario = salario;
+        this.fecha = fecha;
+        this.descripcion = descripcion;
+        this.nombre = nombre;
     }
 
     public Vacante(String nombre) {

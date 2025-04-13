@@ -2,6 +2,7 @@ package com.example.Reto.services;
 
 import com.example.Reto.model.Solicitud;
 import com.example.Reto.model.Vacante;
+import com.example.Reto.model.VacanteDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +17,8 @@ public interface VacanteService {
     public List<Vacante> buscarTodas(int id_empresa);
     public Vacante modificarVacante(int id_vacante, Vacante nuevavacante);
     // --------------- USUARIO ---------------------
-    public List<Vacante> buscarPorEmpresa(String nombre);
-    public List<Vacante> buscarPorCategoria(String nombre);
+    public List<VacanteDTO> buscarPorEmpresa(String nombre);
+    public List<VacanteDTO> buscarPorCategoria(String nombre);
     public List<Vacante> verVacantesCreadas();
 
 

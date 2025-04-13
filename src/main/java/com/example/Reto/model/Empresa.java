@@ -62,6 +62,8 @@ public class Empresa {
         this.responsable = responsable;
     }
 
+
+
     public Usuario getResponsable() {
         return responsable;
     }
