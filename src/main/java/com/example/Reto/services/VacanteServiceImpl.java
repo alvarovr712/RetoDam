@@ -205,5 +205,38 @@ public class VacanteServiceImpl implements VacanteService{
 
     }
 
+    @Override
+    public List<VacanteDTO> buscarVacantePorId2(int id_vacante) {
+         Optional<Vacante> vacantes = vacanteRepository.findById(id_vacante);
+
+        List<VacanteDTO> vacantes2 = new ArrayList<>();
+
+        if(vacantes.isEmpty()){
+            return new ArrayList<>();
+        }
+
+        Vacante item = vacantes.get();
+
+        String categoriaNombre = (item.getCategoria() != null) ? item.getCategoria().getNombre() : "null";
+        String empresaNombre = (item.getEmpresa() != null) ? item.getEmpresa().getRazon_social() : "null";
+
+        VacanteDTO vacante = new VacanteDTO(
+                item.getId_vacante(),
+                item.getNombre(),
+                item.getDescripcion(),
+                item.getFecha(),
+                item.getSalario(),
+                item.getDestacado(),
+                item.getImagen(),
+                item.getDetalles(),
+                empresaNombre,
+                categoriaNombre
+        );
+
+        vacantes2.add(vacante);
+        return vacantes2;
+
+    }
+
 
 }
