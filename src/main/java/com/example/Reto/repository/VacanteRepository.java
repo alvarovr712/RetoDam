@@ -26,10 +26,10 @@ public interface VacanteRepository extends JpaRepository<Vacante,Integer> {
     List<Vacante> findVacantesByEstatus();
 
     //FILTROS
-    @Query("SELECT v FROM vacante v WHERE v.empresa.razon_social = :nombreEmpresa")
+    @Query("SELECT v FROM vacante v WHERE v.empresa.razon_social like %:nombreEmpresa%")
     List<Vacante> findByRazonSocial(String nombreEmpresa);
 
-    @Query("SELECT v FROM vacante v WHERE v.categoria.nombre = :nombreCategoria")
+    @Query("SELECT v FROM vacante v WHERE v.categoria.nombre like %:nombreCategoria%")
     List<Vacante> findByCategoria(String nombreCategoria);
 
 }
