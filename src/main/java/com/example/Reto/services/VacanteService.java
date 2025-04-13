@@ -20,7 +20,7 @@ public interface VacanteService {
     public List<VacanteDTO> buscarPorEmpresa(String nombre);
     public List<VacanteDTO> buscarPorCategoria(String nombre);
     public List<VacanteDTO> verVacantesCreadas();
-    public List<VacanteDTO> buscarVacantePorId2(int id_vacante);
+    public VacanteDTO buscarVacantePorId2(int id_vacante);
 
 
 }

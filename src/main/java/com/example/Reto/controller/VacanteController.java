@@ -83,7 +83,7 @@ public class VacanteController {
     // ------ VACANTE -------
 
     @GetMapping("ver/{id_vacante}")
-    public ResponseEntity<List<VacanteDTO>> buscarVacantesporId2(@PathVariable int id_vacante){
+    public ResponseEntity<VacanteDTO> buscarVacantesporId2(@PathVariable int id_vacante){
         return (new ResponseEntity<>(vacanteService.buscarVacantePorId2(id_vacante),HttpStatus.OK));
     }
 

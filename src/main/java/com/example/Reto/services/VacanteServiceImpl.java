@@ -206,14 +206,15 @@ public class VacanteServiceImpl implements VacanteService{
     }
 
     @Override
-    public List<VacanteDTO> buscarVacantePorId2(int id_vacante) {
+    public VacanteDTO buscarVacantePorId2(int id_vacante) {
          Optional<Vacante> vacantes = vacanteRepository.findById(id_vacante);
 
-        List<VacanteDTO> vacantes2 = new ArrayList<>();
+         if(vacantes.isEmpty()){
+             return  null;
+         }
 
-        if(vacantes.isEmpty()){
-            return new ArrayList<>();
-        }
+
+
 
         Vacante item = vacantes.get();
 
@@ -233,8 +234,7 @@ public class VacanteServiceImpl implements VacanteService{
                 categoriaNombre
         );
 
-        vacantes2.add(vacante);
-        return vacantes2;
+        return vacante;
 
     }
 
