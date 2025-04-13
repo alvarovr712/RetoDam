@@ -1,5 +1,6 @@
 package com.example.Reto.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -23,7 +24,8 @@ public class Empresa {
 
 
 
-    @OneToMany(mappedBy = "empresa",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "empresa",fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Vacante> vacantes;
 
     @OneToOne

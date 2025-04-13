@@ -48,14 +48,14 @@ public class Vacante {
         ASIGNADA
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_empresa")
-    @JsonIgnore
+
     private Empresa empresa;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_categoria")
-    @JsonIgnore
+
     private Categoria categoria;
 
     //He tenido que poner el fetch en Lazy porque al intentar cambiar el estatus de la vacante me daba error con el EAGER
