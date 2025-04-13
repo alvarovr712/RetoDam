@@ -25,4 +25,11 @@ public interface VacanteRepository extends JpaRepository<Vacante,Integer> {
     @Query("SELECT v FROM vacante v WHERE v.estatus = 'CREADA'")
     List<Vacante> findVacantesByEstatus();
 
+    //FILTROS
+    @Query("SELECT v FROM vacante v WHERE v.empresa.razon_social = :nombreEmpresa")
+    List<Vacante> findByRazonSocial(String nombreEmpresa);
+
+    @Query("SELECT v FROM vacante v WHERE v.categoria.nombre = :nombreCategoria")
+    List<Vacante> findByCategoria(String nombreCategoria);
+
 }

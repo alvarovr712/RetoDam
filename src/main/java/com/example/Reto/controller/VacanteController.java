@@ -62,14 +62,14 @@ public class VacanteController {
 
     // ------------- USUARIO ------------------------
     //Filtro Empresa
-    @GetMapping("empresa/{id_empresa}")
-    public ResponseEntity<List<Vacante>> filtroEmpresa(@PathVariable int id_empresa){
-        return (new ResponseEntity<>(vacanteService.buscarPorEmpresa(id_empresa),HttpStatus.OK));
+    @GetMapping("empresa/{nombreEmpresa}")
+    public ResponseEntity<List<Vacante>> filtroEmpresa(@PathVariable  String nombreEmpresa){
+        return (new ResponseEntity<>(vacanteService.buscarPorEmpresa(nombreEmpresa),HttpStatus.OK));
     }
     //Filtro Categoria
-    @GetMapping("categoria/{id_categoria}")
-    public ResponseEntity<List<Vacante>> filtroCategoria(@PathVariable int id_categoria){
-        return (new ResponseEntity<>(vacanteService.buscarPorCategoria(id_categoria),HttpStatus.OK));
+    @GetMapping("categoria/{nombreCategoria}")
+    public ResponseEntity<List<Vacante>> filtroCategoria(@PathVariable String nombreCategoria){
+        return (new ResponseEntity<>(vacanteService.buscarPorCategoria(nombreCategoria),HttpStatus.OK));
     }
 
     //Ver vacantes por estado creado

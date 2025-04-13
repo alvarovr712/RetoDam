@@ -16,8 +16,8 @@ public interface VacanteService {
     public List<Vacante> buscarTodas(int id_empresa);
     public Vacante modificarVacante(int id_vacante, Vacante nuevavacante);
     // --------------- USUARIO ---------------------
-    public List<Vacante> buscarPorEmpresa(int id_empresa);
-    public List<Vacante> buscarPorCategoria(int id_categoria);
+    public List<Vacante> buscarPorEmpresa(String nombre);
+    public List<Vacante> buscarPorCategoria(String nombre);
     public List<Vacante> verVacantesCreadas();
 
 

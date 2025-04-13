@@ -123,13 +123,13 @@ public class VacanteServiceImpl implements VacanteService{
 
 
     @Override
-    public List<Vacante> buscarPorEmpresa(int id_empresa) {
-          return vacanteRepository.findByEmpresa(id_empresa);
+    public List<Vacante> buscarPorEmpresa(String nombre) {
+          return vacanteRepository.findByRazonSocial(nombre);
     }
 
     @Override
-    public List<Vacante> buscarPorCategoria(int id_categoria) {
-        return vacanteRepository.findByCategoria(id_categoria);
+    public List<Vacante> buscarPorCategoria(String nombre) {
+        return vacanteRepository.findByCategoria(nombre);
 
     }
 
