@@ -19,7 +19,7 @@ public class SolicitudServiceImpl implements SolicitudService{
     private SolicitudRepository solicitudRepository;
     @Autowired
     private VacanteRepository vacanteRepository;
-
+        // ------------   USUARIO -----------
     @Override
     public Solicitud crearSolicitud(Solicitud solicitud) {
         Vacante vacante = vacanteRepository.findById(solicitud.getVacante().getId_vacante()).orElse(null);
@@ -52,22 +52,43 @@ public class SolicitudServiceImpl implements SolicitudService{
     }
 
     @Override
-    public String borrarSolicitud(int id_solicitud) {
+    public String cancelarSolicitud(int id_solicitud) {
         Solicitud solicitud = solicitudRepository.findById(id_solicitud).orElse(null);
 
         if(solicitud == null){
             return "La solicitud no fue encontrada";
         }
 
-        if(solicitud.getEstado() != 0){
+        if(solicitud.getEstado() == 1){
             return "No se puede eliminar la solicitud  ya que se ha aceptado";
         }
+        solicitud.setEstado(3);
+        solicitudRepository.save(solicitud);
 
-        solicitud.setVacante(null);
-        solicitud.setUsuario(null);
-       solicitudRepository.delete(solicitud);
+
 
         return "La solicitud ha sido cancelada correctamente";
 
+    }
+
+    // ------ EMPRESA ------------
+
+    @Override
+    public String rechazarSolicitud(int id_solicitud) {
+        Solicitud solicitud = solicitudRepository.findById(id_solicitud).orElse(null);
+
+        if(solicitud == null){
+            return "La solicitud no fue encontrada";
+        }
+
+        if(solicitud.getEstado() == 1){
+            return "No se puede rechazar la solicitud  ya que se ha aceptado";
+        }
+        solicitud.setEstado(2);
+        solicitudRepository.save(solicitud);
+
+
+
+        return "La solicitud ha sido rechazada correctamente";
     }
 }

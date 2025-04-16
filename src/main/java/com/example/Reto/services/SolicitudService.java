@@ -9,5 +9,6 @@ public interface SolicitudService {
 
     Solicitud crearSolicitud (Solicitud solicitud);
     List<Solicitud> buscarSolicitudesPorUsuario(String username);
-    String borrarSolicitud(int id_solicitud);
+    String cancelarSolicitud(int id_solicitud);
+    String rechazarSolicitud(int id_solicitud);
 }
