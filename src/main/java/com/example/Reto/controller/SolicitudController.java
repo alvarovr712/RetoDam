@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("solicitud")
 public class SolicitudController {
@@ -26,5 +28,14 @@ public class SolicitudController {
         }
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(solicitud1);
+    }
+    @GetMapping("/usuario/{username}")
+    public ResponseEntity<List<Solicitud>> buscarSolicitudesDeUsuario(@PathVariable String username){
+        return (new ResponseEntity<>(solicitudService.buscarSolicitudesPorUsuario(username),HttpStatus.OK));
+    }
+
+    @DeleteMapping("cancelar/{id_solicitud}")
+    public ResponseEntity<String> cancelarSolicitud (@PathVariable int id_solicitud){
+        return (new ResponseEntity<>(solicitudService.borrarSolicitud(id_solicitud),HttpStatus.OK));
     }
 }

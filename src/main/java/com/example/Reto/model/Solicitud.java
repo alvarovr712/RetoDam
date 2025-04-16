@@ -27,11 +27,11 @@ public class Solicitud {
     private int estado;
 
     @ManyToOne()
-    @JoinColumn(name = "id_vacante")
+    @JoinColumn(name = "id_vacante", nullable = true)
     private Vacante vacante;
 
     @ManyToOne()
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "username", nullable = true)
     private Usuario usuario;
 
     public Solicitud() {

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,5 +44,30 @@ public class SolicitudServiceImpl implements SolicitudService{
         return solicitudRepository.save(solicitud);
 
 //        return solicitud;
+    }
+
+    @Override
+    public List<Solicitud> buscarSolicitudesPorUsuario(String username) {
+        return solicitudRepository.buscarSolicitudesPorUsername(username);
+    }
+
+    @Override
+    public String borrarSolicitud(int id_solicitud) {
+        Solicitud solicitud = solicitudRepository.findById(id_solicitud).orElse(null);
+
+        if(solicitud == null){
+            return "La solicitud no fue encontrada";
+        }
+
+        if(solicitud.getEstado() != 0){
+            return "No se puede eliminar la solicitud  ya que se ha aceptado";
+        }
+
+        solicitud.setVacante(null);
+        solicitud.setUsuario(null);
+       solicitudRepository.delete(solicitud);
+
+        return "La solicitud ha sido cancelada correctamente";
+
     }
 }
