@@ -1,6 +1,7 @@
 package com.example.Reto.services;
 
 import com.example.Reto.model.Empresa;
+import com.example.Reto.model.Usuario;
 import com.example.Reto.repository.EmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class EmpresaServiceImpl implements EmpresaService{
 
     @Override
     public Empresa altaEmpresa(Empresa empresa) {
+
         return empresaRepository.save(empresa);
     }
 
@@ -59,7 +61,13 @@ public class EmpresaServiceImpl implements EmpresaService{
     @Override
     public String eliminarEmpresa(int id_empresa) {
         Empresa empresa = empresaRepository.findById(id_empresa).orElse(null);
+
         if(empresa != null) {
+            Usuario responsable = empresa.getResponsable();
+            if(responsable != null){
+                empresa.setResponsable(null);
+                empresaRepository.save(empresa);
+            }
             empresaRepository.delete(empresa);
             return "La empresa ha sido eliminada correctamente";
         }else {

@@ -29,7 +29,7 @@ public class Empresa {
     private List<Vacante> vacantes;
 
     @OneToOne
-    @JoinColumn(name = "responsable",referencedColumnName = "username")
+    @JoinColumn(name = "responsable",referencedColumnName = "username",nullable = true)
     private Usuario responsable;
 
 
