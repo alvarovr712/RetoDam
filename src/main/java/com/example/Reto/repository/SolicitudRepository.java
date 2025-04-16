@@ -12,4 +12,8 @@ public interface SolicitudRepository extends JpaRepository<Solicitud,Integer> {
 
     @Query("SELECT s FROM Solicitud s WHERE s.usuario.username = :username")
     List<Solicitud> buscarSolicitudesPorUsername(String username);
+
+    // Para Vacantes sacar todas las solicitudes con estado 0 de una vacante
+    @Query("SELECT s FROM Solicitud s WHERE s.vacante.id_vacante = :id_vacante AND s.estado = 0")
+    List<Solicitud> obtenerSolicitudesVacante(int id_vacante);
 }

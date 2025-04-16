@@ -59,17 +59,30 @@ public class VacanteServiceImpl implements VacanteService{
     @Override
     public void asignarVacante(int id_vacante, int id_solicitud) {
 
-        Vacante vacante = vacanteRepository.findById(id_vacante).orElse(null);
-        Solicitud solicitud = solicitudRepository.findById(id_solicitud).orElse(null);
-        if(vacante != null &&  solicitud != null){
-            vacante.setEstatus(Vacante.Estatus.ASIGNADA);
-            vacanteRepository.save(vacante);
-            solicitud.setEstado(1);
-            solicitudRepository.save(solicitud);
+       Vacante vacante = vacanteRepository.findById(id_vacante).orElse(null);
+       Solicitud solicitud = solicitudRepository.findById(id_solicitud).orElse(null);
 
-        }else {
-            System.out.println("El nombre de la vacante o el id de la solicitud es incorrecto");
-        }
+       if(vacante != null && solicitud != null){
+
+           if(vacante.getEstatus() == Vacante.Estatus.ASIGNADA){
+               System.out.println("La vacante ya está asignada");
+               return;
+           }
+           vacante.setEstatus(Vacante.Estatus.ASIGNADA);
+           vacanteRepository.save(vacante);
+
+           solicitud.setEstado(1);
+           solicitudRepository.save(solicitud);
+
+           List<Solicitud> solicitudesRestantes = solicitudRepository.obtenerSolicitudesVacante(id_vacante);
+           for(Solicitud item : solicitudesRestantes){
+               item.setEstado(2);
+               solicitudRepository.save(item);
+           }
+           System.out.println("Vacante asignada correctamente");
+       }else{
+           System.out.println("El id_vacante o id_solicitud es incorrecto");
+       }
 
     }
 
