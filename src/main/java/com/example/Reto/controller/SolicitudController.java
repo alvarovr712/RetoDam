@@ -40,7 +40,7 @@ public class SolicitudController {
 
 
     @PutMapping("cancelar/{id_solicitud}")
-    public ResponseEntity<String> cancelarSolicitud(@PathVariable int id_solicitud) {
+    public ResponseEntity<?> cancelarSolicitud(@PathVariable int id_solicitud) {
         return (new ResponseEntity<>(solicitudService.cancelarSolicitud(id_solicitud), HttpStatus.OK));
     }
 
